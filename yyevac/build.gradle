@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 31
+    namespace = "com.yy.yyeva"
 
     defaultConfig {
+        compileSdkVersion 31
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
@@ -15,12 +15,12 @@ android {
             cmake {
                 cppFlags "-std=c++11 -fexceptions"
 //                abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
-                abiFilters = ["armeabi-v7a","arm64-v8a", 'x86', 'x86_64']
+                abiFilters = ["armeabi-v7a", "arm64-v8a", 'x86', 'x86_64']
             }
         }
         ndk {
 //            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-            setAbiFilters(['armeabi-v7a', 'arm64-v8a','x86', 'x86_64'])
+            setAbiFilters(['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'])
 //            abiFilters.clear()
         }
     }
@@ -30,6 +30,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
     externalNativeBuild {
         cmake {

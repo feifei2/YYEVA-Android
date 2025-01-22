@@ -2,11 +2,16 @@ package com.yy.yyeva.player
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import android.text.TextPaint
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.yy.yyeva.EvaAnimConfig
@@ -14,17 +19,14 @@ import com.yy.yyeva.inter.IEvaAnimListener
 import com.yy.yyeva.inter.IEvaFetchResource
 import com.yy.yyeva.inter.OnEvaResourceClickListener
 import com.yy.yyeva.mix.EvaResource
+import com.yy.yyeva.mix.EvaSrc
+import com.yy.yyeva.player.bean.VideoInfo
+import com.yy.yyeva.player.databinding.ActivityAnimSimpleDemoPBinding
 import com.yy.yyeva.util.ELog
 import com.yy.yyeva.util.IELog
 import com.yy.yyeva.util.ScaleType
-import java.io.File
-import java.util.*
-import android.text.TextPaint
-import android.util.Log
-import com.yy.yyeva.mix.EvaSrc
-import com.yy.yyeva.player.bean.VideoInfo
 import com.yy.yyeva.view.EvaAnimViewV3
-import kotlinx.android.synthetic.main.activity_anim_simple_demo_p.*
+import java.io.File
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -54,11 +56,16 @@ class EvaDemoActivity : Activity(), IEvaAnimListener {
         Handler(Looper.getMainLooper())
     }
 
+    private val binding by lazy {
+        ActivityAnimSimpleDemoPBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_anim_simple_demo_p)
+        setContentView(binding.root)
+//        setContentView(R.layout.activity_anim_simple_demo_p)
         // 获取动画view
-        animView = playerView
+        animView = binding.playerView
         loadFile()
     }
 
@@ -270,17 +277,17 @@ class EvaDemoActivity : Activity(), IEvaAnimListener {
 
 
     private fun initTestView() {
-        btnLayout.visibility = View.VISIBLE
+        binding.btnLayout.visibility = View.VISIBLE
         /**
          * 开始播放
          */
-        btnPlay.setOnClickListener {
+        binding.btnPlay.setOnClickListener {
             play(videoInfo)
         }
         /**
          * 结束视频
          */
-        btnStop.setOnClickListener {
+        binding.btnStop.setOnClickListener {
             ELog.i(TAG, "btnStop")
             animView.stopPlay()
         }
